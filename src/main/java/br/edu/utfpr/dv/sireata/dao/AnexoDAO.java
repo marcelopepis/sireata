@@ -8,19 +8,29 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.edu.utfpr.dv.sireata.model.Anexo;
+import javax.persistence.EntityManager;
 
-public class AnexoDAO {
+import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+
+import br.edu.utfpr.dv.sireata.model.Anexo;
+import br.edu.utfpr.dv.sireata.model.QAnexo;
+
+public class AnexoDAO implements StorageDAO<Anexo>{
+	private EntityManager entityManager;
 	
 	public Anexo buscarPorId(int id) throws SQLException{
+		QAnexo anexo = QAnexo.anexo;
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
 		try{
+			
+			JPAQuery<Anexo> query = new JPAQueryFactory(entityManager).selectFrom(anexo).where(anexo.idAnexo.eq(id));
+			System.out.println(query.toString());
 			conn = ConnectionDAO.getInstance().getConnection();
-			stmt = conn.prepareStatement("SELECT anexos.* FROM anexos " +
-				"WHERE idAnexo = ?");
+			stmt = conn.prepareStatement(query.toString());
 		
 			stmt.setInt(1, id);
 			
