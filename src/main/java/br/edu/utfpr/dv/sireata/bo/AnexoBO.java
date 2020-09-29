@@ -9,13 +9,13 @@ import br.edu.utfpr.dv.sireata.dao.StorageDAO;
 import br.edu.utfpr.dv.sireata.model.Anexo;
 
 public class AnexoBO {
-	private static StorageDAO<Anexo> strategy;
+	private static StorageDAO<Anexo> storageDAO;
 
 	public Anexo buscarPorId(int id) throws Exception{
 		try{
-			strategy = new AnexoDAO();
+			storageDAO = new AnexoDAO();
 			
-			return strategy.buscarPorId(id);
+			return storageDAO.buscarPorId(id);
 		}catch(Exception e){
 			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
 			
@@ -52,9 +52,9 @@ public class AnexoBO {
 			
 			this.validarDados(anexo);
 			
-			strategy = new AnexoDAO();
+			storageDAO = new AnexoDAO();
 			
-			return strategy.salvar(anexo);
+			return storageDAO.salvar(anexo);
 		}catch(Exception e){
 			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
 			
