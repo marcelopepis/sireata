@@ -1,11 +1,20 @@
 package br.edu.utfpr.dv.sireata.model;
 
+import javax.persistence.*;
+
+@Entity
 public class Anexo {
 	
+	@Id
+	@GeneratedValue
 	private int idAnexo;
+	@OneToMany
 	private Ata ata;
+	@Column
 	private int ordem;
+	@Column
 	private String descricao;
+	@Column
 	private byte[] arquivo;
 	
 	public Anexo() {
